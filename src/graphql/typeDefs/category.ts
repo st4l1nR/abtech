@@ -3,7 +3,7 @@ import { gql } from "apollo-server-micro";
 export default gql`
   type Category {
     _id: ID!
-    parentId: ID
+    parent: Category
     name: String!
     description: String
     assets: [String]!
@@ -17,20 +17,19 @@ export default gql`
   }
   extend type Mutation {
     createCategory(
-      parentId: ID
+      parent: ID
       name: String!
       description: String
       assets: [String]
-      products: [ID!]!
-    ): [Category]!
+    ): Category
     updateCategory(
       _id: ID!
-      parentId: ID
+      parent: ID
       name: String
       description: String
       assets: [String]
       products: [ID]
-    ): [Category!]!
+    ): Category
     deleteCategory(_id: ID!): [Category]!
   }
 `;

@@ -32,7 +32,7 @@ export default gql`
       endsOn: Date
       limitQuantity: Int
       products: [String]
-    ): [Discount]!
+    ): Discount!
     updateDiscount(
       _id: ID!
       code: String
@@ -42,7 +42,7 @@ export default gql`
       endsOn: Date
       limitQuantity: Int
       products: [String]
-    ): [Discount!]!
+    ): Discount!
     deleteDiscount(_id: ID!): [Discount]!
   }
 `;

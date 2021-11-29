@@ -1,5 +1,4 @@
 export {default as product} from './product'
-export {default as variantGroup} from './variantGroup'
 export {default as variant} from './variant'
 export {default as category} from './category'
 export {default as shippingMethod} from './shippingMethod'

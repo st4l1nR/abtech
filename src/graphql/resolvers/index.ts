@@ -1,14 +1,17 @@
-import {productQueries, productMutations} from './product'
-import {variantGroupQueries, variantGroupMutations} from './variantGroup'
-import {variantQueries, variantMutations} from './variant'
-import {categoryQueries, categoryMutations} from './category'
-import {shippingMethodQueries, shippingMethodMutations} from './shippingMethod'
-import {discountQueries, discountMutations} from './discount'
-import { GraphQLScalarType, Kind } from 'graphql';
+import * as types from "../../types";
+import { productQueries, productMutations } from "./product";
+import { variantQueries, variantMutations } from "./variant";
+import { categoryQueries, categoryMutations } from "./category";
+import {
+  shippingMethodQueries,
+  shippingMethodMutations,
+} from "./shippingMethod";
+import { discountQueries, discountMutations } from "./discount";
+import { GraphQLScalarType, Kind } from "graphql";
 
 const dateScalar = new GraphQLScalarType({
-  name: 'Date',
-  description: 'Date custom scalar type',
+  name: "Date",
+  description: "Date custom scalar type",
   serialize(value) {
     return value.getTime(); // Convert outgoing Date to integer for JSON
   },
@@ -24,24 +27,43 @@ const dateScalar = new GraphQLScalarType({
 });
 
 const resolvers = {
-    Date:dateScalar,
-    Query: {
-      ...productQueries,
-      ...variantGroupQueries,
-      ...variantQueries,
-      ...categoryQueries,
-      ...shippingMethodQueries,
-      ...discountQueries
+  Date: dateScalar,
+  Product: {
+    variants: async ({ _id }: types.Product, args: any, { models }: any) =>
+      await models.variant.find({ productId: _id }),
+    conditionals: {
+      isSoldOut: async (parent: types.Product, args: any, { models }: any) => {
+        const isSoldOut = parent.sales > parent.inventory.avaible;
+        await models.product.updateOne({ _id: parent._id }, { isSoldOut });
+        return isSoldOut;
+      },
     },
-    Mutation: {
-      ...productMutations,
-      ...variantGroupMutations,
-      ...variantMutations,
-      ...categoryMutations,
-      ...shippingMethodMutations,
-      ...discountMutations
+  },
+  Category: {
+    children: async ({ _id }: types.Category, args: any, { models }: any) => {
+      return await models.category.find({
+        parent: { _id: _id },
+      });
     },
-  };
-  
-  export default resolvers;
-  
+    products: async ({ _id }: types.Category, args: any, { models }: any) =>
+      models.product
+        .find({ categories: { $in: [_id] } })
+        .populate(["shippingMethods", "categories", "relatedProducts"]),
+  },
+  Query: {
+    ...productQueries,
+    ...variantQueries,
+    ...categoryQueries,
+    ...shippingMethodQueries,
+    ...discountQueries,
+  },
+  Mutation: {
+    ...productMutations,
+    ...variantMutations,
+    ...categoryMutations,
+    ...shippingMethodMutations,
+    ...discountMutations,
+  },
+};
+
+export default resolvers;

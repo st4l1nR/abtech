@@ -1,6 +1,5 @@
 import {gql} from 'apollo-server-micro'
 import product from './product'
-import variantGroup from './variantGroup'
 import variant from './variant'
 import category from './category'
 import shipping from './shippingMethod'

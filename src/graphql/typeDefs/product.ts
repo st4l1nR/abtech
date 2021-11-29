@@ -10,7 +10,9 @@ export default gql`
     conditionals: Conditionals!
     image: String
     assets: [String]!
+    sales:Int!
     variantGroups: [VariantGroup]!
+    variants:[Variant]!
     shippingMethods: [ShippingMethod]!
     categories: [Category]!
     relatedProducts: [Product]!
@@ -23,7 +25,7 @@ export default gql`
 
   type Conditionals {
     isActive: Boolean!
-    isInventoryManged: Boolean!
+    isInventoryManaged: Boolean!
     isSoldOut: Boolean!
     hasImages: Boolean!
   }
@@ -46,11 +48,11 @@ export default gql`
 
   extend type Mutation {
     createProduct(
-      name: String
+      name: String!
       description: String
-      price: Float
-      inventory: inventoryInput
-      conditionals: conditionalsInput
+      price: Float!
+      inventory: inventoryInput!
+      conditionals: conditionalsInput!
       image: String
       assets: [String]
       variantGroups: [ID]

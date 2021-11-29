@@ -5,16 +5,17 @@ export default gql`
     _id: ID!
     name: String!
     price: Float!
-    countries: [String!]!
-    regions: ShippingMethodRegions!
+    zones: [ShippingMethodZone!]!
   }
 
-  type ShippingMethodRegions {
-    String:String
+  type ShippingMethodZone {
+    country: String!
+    regions: [String!]!
   }
 
-  input shippingMethodRegionsInput {
-    String:String
+  input shippingMethodZoneInput {
+    country: String!
+    regions: [String!]!
   }
 
   extend type Query {
@@ -25,15 +26,13 @@ export default gql`
     createShippingMethod(
       name: String!
       price: Float!
-      countries: [String!]!
-      regions: shippingMethodRegionsInput!
+      zones: [shippingMethodZoneInput!]!
     ): [ShippingMethod]!
     updateShippingMethod(
-      _id: ID
+      _id: ID!
       name: String
       price: Float
-      countries: [String!]
-      regions: shippingMethodRegionsInput
+      zones: [shippingMethodZoneInput]
     ): [ShippingMethod!]!
     deleteShippingMethod(_id: ID!): [ShippingMethod]!
   }

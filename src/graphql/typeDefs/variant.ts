@@ -6,17 +6,19 @@ export default gql`
     inventory: Int!
     price: Float!
     description: String
-    options: VariantOption!
+    options: [VariantOption!]!
     asstes: [String]
     productId: ID!
   }
 
   type VariantOption {
-    String:String
+    variantGroupId:ID!
+    variantGroupOptionId:ID!
   }
   
   input variantOptionInput {
-    String:String
+    variantGroupId:ID!
+    variantGroupOptionId:ID!
   }
 
   extend type Query {
@@ -28,7 +30,7 @@ export default gql`
       inventory: Int
       price: Float
       description: String
-      options: variantOptionInput!
+      options: [variantOptionInput!]!
       assets: [String]
       productId: ID!
     ): [Variant]!
@@ -38,7 +40,7 @@ export default gql`
       price: Float
       description: String
       assets: [String]
-    ): [Variant!]!
+    ): Variant!
     deleteVariant(_id: ID!): [Variant]!
   }
 `;

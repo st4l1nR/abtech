@@ -4,18 +4,18 @@ import { Variant } from "../types";
 delete connection.models["Variant"];
 
 const variantSchema = new Schema<Variant>({
-  inventory: {
-    type: Number,
-    required: true,
-  },
+  inventory: Number,
   price: {
     type: Number,
     required: true,
   },
   description: String,
   options: {
-    type: { String: String },
-    required: true,
+    type:[{
+      variantGroupId:mongoose.Types.ObjectId,
+      variantGroupOptionId:mongoose.Types.ObjectId
+    }],
+    required:true
   },
   assets: String,
   productId: {
