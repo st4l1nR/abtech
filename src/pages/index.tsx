@@ -1,20 +1,11 @@
-import Navbar from '../../components/CLIENT/Navbar/Navbar';
-import Home from '../../components/CLIENT/Home/Home';
-import Services from '../../components/CLIENT/Services/Services';
-import SectionProduct from '../../components/CLIENT/SectionProduct/SectionProduct';
-import Head from 'next/head';
-
-export default function() {
-    return (
-        <div className='h-auto w-full bg-white z-10'>
-            <Head>
-                <title>Cepesito | Home</title>
-            </Head>
-            <Navbar />
-            <Home />
-            <Services />
-            <SectionProduct />
-            <script src="https://unpkg.com/scrollreveal"></script>
-        </div>
-    )
+export default function Home() {
+  return (
+    <div className="container flex items-center p-4 mx-auto min-h-screen justify-center">
+      <main>
+        <h1 className="font-mono text-xl code">
+          Welcome to <span className="text-purple-700">Nextjs</span>, <span className="text-indigo-700">TailwindCSS</span> and <span className="text-gray-700">TypeScript</span>
+        </h1>
+      </main>
+    </div>
+  )
 }
