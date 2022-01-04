@@ -16,11 +16,14 @@ export default gql`
     shippingMethods: [ShippingMethod]!
     categories: [Category]!
     relatedProducts: [Product]!
+    discount:Discount
+    createdAt:Date
+    updatedAt:Date
   }
 
   type Inventory {
     managed: Boolean!
-    avaible: Int!
+    avaible: Int
   }
 
   type Conditionals {
@@ -37,8 +40,8 @@ export default gql`
 
   input conditionalsInput {
     isActive: Boolean!
-    isInventoryManaged: Boolean!
-    hasImages: Boolean!
+    isInventoryManaged: Boolean
+    hasImages: Boolean
   }
 
   extend type Query {
@@ -55,11 +58,11 @@ export default gql`
       conditionals: conditionalsInput!
       image: String
       assets: [String]
-      variantGroups: [ID]
       shippingMethods: [ID!]!
       categories: [ID]
       relatedProducts: [ID]
-    ): [Product!]!
+      discount:ID
+    ): Product!
     updateProduct(
       _id:ID!
       name: String
@@ -69,10 +72,10 @@ export default gql`
       conditionals: conditionalsInput
       image: String
       assets: [String]
-      variantGroups: [ID]
       shippingMethods: [ID]
       categories: [ID]
       relatedProducts:[ID]
+      discount:ID
     ): Product!
     deleteProduct(_id: ID!): [Product]!
   }

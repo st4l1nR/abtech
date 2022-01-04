@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { ApolloServer } from "apollo-server-micro";
 import Cors from "micro-cors";
 import mongoose from "mongoose";
@@ -9,7 +10,7 @@ const cors = Cors();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: () => ({
+  context: ({ req: NextApiRequest, res: NextApiResponse }) => ({
     models,
   }),
 });
@@ -20,11 +21,10 @@ export default cors(async function handler(req, res) {
     res.end();
     return false;
   }
-  if (mongoose.connection[0]!) {
+  if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGODB_URI as string);
-    console.log("Database ready! 🚀");
+    console.log("Database connected");
   }
-
   await startServer;
   await server.createHandler({ path: "/api/graphql" })(req, res);
 });

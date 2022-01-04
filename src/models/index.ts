@@ -1,5 +1,11 @@
+export {default as merchant} from './merchant'
+export {default as user} from './user'
 export {default as product} from './product'
+export {default as variantGroup} from './variantGroup'
 export {default as variant} from './variant'
 export {default as category} from './category'
 export {default as shippingMethod} from './shippingMethod'
 export {default as discount} from './discount'
+export {default as cart} from './cart'
+export {default as order} from './order'
+

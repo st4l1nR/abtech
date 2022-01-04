@@ -3,17 +3,27 @@ import { Category } from "../types";
 
 delete connection.models["Category"];
 
-const categorySchema = new Schema<Category>({
-  parent: {
-    type: mongoose.Types.ObjectId,
-    ref:"Category"
+const categorySchema = new Schema<Category>(
+  {
+    parent: {
+      type: mongoose.Types.ObjectId,
+      ref: "Category",
+    } as any,
+    name: {
+      type: String,
+      required: true,
+    },
+    description: String,
+    assets: [String],
+    children: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Category",
+      },
+    ],
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  description: String,
-  assets: [String],
-});
 
-export default model<Category>("Category", categorySchema)
+  { timestamps: true }
+);
+
+export default model<Category>("Category", categorySchema);

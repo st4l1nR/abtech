@@ -3,22 +3,24 @@ import { gql } from "apollo-server-micro";
 export default gql`
   type Variant {
     _id: String!
-    inventory: Int!
+    productId: ID!
+    inventory: Int
     price: Float!
     description: String
     options: [VariantOption!]!
-    asstes: [String]
-    productId: ID!
+    assets: [String]
+    createdAt:Date!
+    updatedAt:Date!
   }
 
   type VariantOption {
-    variantGroupId:ID!
-    variantGroupOptionId:ID!
+    variantGroup:String!
+    option:String!
   }
   
   input variantOptionInput {
-    variantGroupId:ID!
-    variantGroupOptionId:ID!
+    variantGroup:String!
+    option:String!
   }
 
   extend type Query {
@@ -27,13 +29,13 @@ export default gql`
   }
   extend type Mutation {
     createVariant(
+      productId: ID!
       inventory: Int
       price: Float
       description: String
       options: [variantOptionInput!]!
       assets: [String]
-      productId: ID!
-    ): [Variant]!
+    ): Variant!
     updateVariant(
       _id: ID!
       inventory: Int

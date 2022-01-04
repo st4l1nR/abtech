@@ -9,6 +9,8 @@ export default gql`
     assets: [String]!
     children: [Category]!
     products: [Product!]!
+    createdAt:Date!
+    updatedAt:Date!
   }
 
   extend type Query {
@@ -21,7 +23,7 @@ export default gql`
       name: String!
       description: String
       assets: [String]
-    ): Category
+    ): Category!
     updateCategory(
       _id: ID!
       parent: ID
@@ -29,7 +31,7 @@ export default gql`
       description: String
       assets: [String]
       products: [ID]
-    ): Category
+    ): Category!
     deleteCategory(_id: ID!): [Category]!
   }
 `;

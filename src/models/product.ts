@@ -3,23 +3,6 @@ import { Product, VariantGroup, VariantGroupOption } from "../types";
 
 delete connection.models["Product"];
 
-const variantGroupSchema = new Schema<VariantGroup>({
-  name: {
-    type: String,
-    required: true,
-  },
-  options: {
-    type: [
-      new Schema<VariantGroupOption>({
-        name: String,
-        price: Number,
-      }),
-    ],
-    required: true,
-  },
-  assets: String,
-});
-
 const productSchema = new Schema<Product>(
   {
     name: {
@@ -36,10 +19,7 @@ const productSchema = new Schema<Product>(
         type: Boolean,
         required: true,
       },
-      avaible: {
-        type: Number,
-        default: false,
-      },
+      avaible: Number,
     },
     conditionals: {
       isActive: {
@@ -48,7 +28,7 @@ const productSchema = new Schema<Product>(
       },
       isInventoryManaged: {
         type: Boolean,
-        required: true,
+        default: false,
       },
       isSoldOut: {
         type: Boolean,
@@ -56,7 +36,7 @@ const productSchema = new Schema<Product>(
       },
       hasImages: {
         type: Boolean,
-        required: true,
+        default: false,
       },
     },
     image: String,
@@ -65,7 +45,18 @@ const productSchema = new Schema<Product>(
       type: Number,
       default: 0,
     },
-    variantGroups: [variantGroupSchema],
+    variantGroups: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "VariantGroup",
+      },
+    ],
+    variants: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Variant",
+      },
+    ],
     shippingMethods: [
       {
         type: mongoose.Types.ObjectId,
@@ -85,6 +76,10 @@ const productSchema = new Schema<Product>(
         ref: "Product",
       },
     ],
+    discount: {
+      type: mongoose.Types.ObjectId,
+      ref: "Discount",
+    },
   },
   { timestamps: true }
 );
