@@ -4,13 +4,13 @@ export default gql`
   type Order {
     _id:ID!
     status: OrderStatus!
-    custormer: OrderCustomer!
+    customer: OrderCustomer!
     shipping: OrderShipping!
     cart: Cart!
     createdAt:Date!
     updatedAt:Date!
   }
-
+  
   type OrderCustomer {
     email: String!
   }

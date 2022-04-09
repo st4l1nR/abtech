@@ -1,37 +1,24 @@
 import * as types from "../../types";
-import {merchantQueries, merchantMutations} from './merchant'
-import {userQueries, userMutations} from './user'
+import models from "../../models";
+import type { IResolvers } from "@graphql-tools/utils";
+import { merchantQueries, merchantMutations } from "./merchant";
+import { userQueries, userMutations } from "./user";
 import { productQueries, productMutations } from "./product";
 import { variantGroupQueries, variantGroupMutations } from "./variantGroup";
 import { variantQueries, variantMutations } from "./variant";
 import { categoryQueries, categoryMutations } from "./category";
 import { cartQueries, cartMutations } from "./cart";
-import {orderQueries, orderMutations} from './order'
-
+import { orderQueries, orderMutations } from "./order";
 import {
   shippingMethodQueries,
   shippingMethodMutations,
 } from "./shippingMethod";
 import { discountQueries, discountMutations } from "./discount";
-import { GraphQLScalarType, Kind } from "graphql";
+import { dateScalar } from "./scalars";
 
-
-const dateScalar = new GraphQLScalarType({
-  name: "Date",
-  description: "Date custom scalar type",
-  serialize(value) {
-    return value.getTime(); // Convert outgoing Date to integer for JSON
-  },
-  parseValue(value) {
-    return new Date(value); // Convert incoming integer to Date
-  },
-  parseLiteral(ast) {
-    if (ast.kind === Kind.INT) {
-      return new Date(parseInt(ast.value, 10)); // Convert hard-coded AST string to integer and then to Date
-    }
-    return null; // Invalid hard-coded value (not an integer)
-  },
-});
+type Context = {
+  models: typeof models;
+};
 
 const resolvers = {
   Date: dateScalar,
@@ -109,7 +96,7 @@ const resolvers = {
         { _id },
         { childrens: childrens.map((children) => children._id) }
       );
-      return childrens
+      return childrens;
     },
     products: async ({ _id }: types.Category, args: any, { models }: any) =>
       await models.product
@@ -126,7 +113,7 @@ const resolvers = {
     ...shippingMethodQueries,
     ...discountQueries,
     ...cartQueries,
-    ...orderQueries
+    ...orderQueries,
   },
   Mutation: {
     ...merchantMutations,
@@ -138,7 +125,7 @@ const resolvers = {
     ...shippingMethodMutations,
     ...discountMutations,
     ...cartMutations,
-    ...orderMutations
+    ...orderMutations,
   },
 };
 

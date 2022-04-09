@@ -1,5 +1,5 @@
 import mongoose, { connection, Schema, model } from "mongoose";
-import { Variant } from "../types";
+import { Variant } from "../types/graphql";
 
 delete connection.models["Variant"];
 

@@ -17,7 +17,7 @@ const link = gql`
   }
 
   type Mutation {
-    _: Boolean
+    _: Boolean,
   }
 `;
 export default [

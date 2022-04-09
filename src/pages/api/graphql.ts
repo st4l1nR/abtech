@@ -4,16 +4,22 @@ import Cors from "micro-cors";
 import mongoose from "mongoose";
 import typeDefs from "../../graphql/typeDefs";
 import resolvers from "../../graphql/resolvers";
-import * as models from "../../models";
+import models from "../../models";
+import { getSession } from "next-auth/react";
 
 const cors = Cors();
 const server = new ApolloServer({
   typeDefs,
-  resolvers,
-  context: ({ req: NextApiRequest, res: NextApiResponse }) => ({
-    models,
-  }),
+  resolvers: resolvers,
+  context: async ({ req, res }: any) => {
+    const session = await getSession({ req });
+    return {
+      models,
+      session,
+    };
+  },
 });
+
 const startServer = server.start();
 
 export default cors(async function handler(req, res) {
@@ -23,7 +29,6 @@ export default cors(async function handler(req, res) {
   }
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGODB_URI as string);
-    console.log("Database connected");
   }
   await startServer;
   await server.createHandler({ path: "/api/graphql" })(req, res);

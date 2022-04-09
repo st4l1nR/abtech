@@ -17,8 +17,8 @@ export default gql`
     categories: [Category]!
     relatedProducts: [Product]!
     discount:Discount
-    createdAt:Date
-    updatedAt:Date
+    createdAt:Date!
+    updatedAt:Date!
   }
 
   type Inventory {
@@ -55,13 +55,12 @@ export default gql`
       description: String
       price: Float!
       inventory: inventoryInput!
-      conditionals: conditionalsInput!
       image: String
       assets: [String]
+      conditionals:conditionalsInput!
       shippingMethods: [ID!]!
       categories: [ID]
       relatedProducts: [ID]
-      discount:ID
     ): Product!
     updateProduct(
       _id:ID!

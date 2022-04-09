@@ -1,11 +1,25 @@
-export {default as merchant} from './merchant'
-export {default as user} from './user'
-export {default as product} from './product'
-export {default as variantGroup} from './variantGroup'
-export {default as variant} from './variant'
-export {default as category} from './category'
-export {default as shippingMethod} from './shippingMethod'
-export {default as discount} from './discount'
-export {default as cart} from './cart'
-export {default as order} from './order'
+import user from "./user";
+import merchant from "./merchant";
+import product from "./product";
+import variantGroup from "./variantGroup";
+import variant from "./variant";
+import category from "./category";
+import shippingMethod from "./shippingMethod";
+import discount from "./discount";
+import cart from "./cart";
+import order from "./order";
 
+const models = {
+  merchant,
+  user,
+  product,
+  variantGroup,
+  category,
+  variant,
+  shippingMethod,
+  discount,
+  cart,
+  order,
+}
+
+export default models;

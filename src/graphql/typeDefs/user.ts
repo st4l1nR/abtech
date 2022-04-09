@@ -5,8 +5,11 @@ export default gql`
     _id:ID!
     firstName: String!
     lastName: String!
-    mail: String!
-    password: String!
+    email: String!
+    password: String
+    image:String
+    type:String!
+    provider:String!
   }
 
   extend type Query {
@@ -18,7 +21,7 @@ export default gql`
     createUser(
       firstName: String!
       lastName: String!
-      mail: String!
+      email: String!
       password: String!
     ): User!
     updateUser(_id:ID! password:String): User!

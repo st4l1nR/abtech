@@ -13,6 +13,11 @@ export const userMutations = {
     args: types.createUserInput,
     { models }: any
   ) => {
+    console.log(args);
+    const repeatEmail = Boolean(
+      await models.user.findOne({ email: args.email })
+    );
+    if (repeatEmail) throw new Error("email already in use");
     const newUser = new models.user(args);
     return await newUser.save();
   },
@@ -21,9 +26,8 @@ export const userMutations = {
     { _id, ...args }: types.updateUserInput,
     { models }: any
   ) => await models.user.findOneAndUpdate({ _id }, args, { new: true }),
-  deleteUser: async (parent:any, {_id}:any, {models}:any) => {
-      await models.user.deleteOne({_id})
-      return true
-  }
+  deleteUser: async (parent: any, { _id }: any, { models }: any) => {
+    await models.user.deleteOne({ _id });
+    return true;
+  },
 };
-

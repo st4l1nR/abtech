@@ -1,5 +1,5 @@
 import {connection , Schema, model} from 'mongoose'
-import {User} from '../types'
+import {User} from '../types/graphql'
 
 delete connection.models['User']
 
@@ -8,24 +8,28 @@ const userSchema = new Schema<User>({
         type:String,
         required:true
     },
-    lastName:{
+    lastName: {
         type:String,
         required:true
     },
-    mail:{
+    email:{
         type:String,
         required:true
     },
-    password: {
+    password: String,
+    image:String,
+    type: {
         type:String,
-        required:true
+        enum:["customer", "admin"],
+        default:"customer"
     },
-    role: {
+    provider : {
         type:String,
-        enum:["normal", "admin", "root"],
-        default:"normal"
+        enum:["google", "email"],
+        default:"email"
     }
-
 })
+const userModel = model("User", userSchema)
+
 
 export default model("User", userSchema)

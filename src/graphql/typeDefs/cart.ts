@@ -5,6 +5,7 @@ export default gql`
     _id: ID!
     totalItems: Int!
     subtotal: Float!
+    total:Float!
     items: [CartItem]!
     discounts: [CartDiscount]!
     currency: CartCurrency!

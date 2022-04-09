@@ -1,5 +1,5 @@
 import mongoose, { connection, model, Schema } from "mongoose";
-import { Order } from "../types";
+import { Order } from "../types/graphql";
 
 delete connection.models["Order"];
 
@@ -7,13 +7,13 @@ const orderSchema = new Schema<Order>({
   status: {
     type: String,
     enum: ["fullfilled", "notfullfilled"],
-    default: "notfullfilled",
+
   },
   customer: {
     email: {
-      type: String,
-      required: true,
-    },
+      type:String,
+      required:true
+    }
   },
   shipping: {
     name: {
